@@ -18,7 +18,7 @@ pygame.display.set_caption("NotCraft")
 background_surface = pygame.image.load("assets/graphics/enviorment/background.jpeg").convert()
 background_surface = pygame.transform.scale(background_surface,(width,height))
 
-player = player.Player((600,400),4)
+player = player.Player((600,400),4,10)
 while True:
     #Groups
     player_group = pygame.sprite.GroupSingle(player)
@@ -30,9 +30,6 @@ while True:
     #Updating
     player_group.update()
 
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            exit()
     pygame.display.update()
     clock.tick(FPS)
 
