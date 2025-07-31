@@ -31,7 +31,7 @@ class Player(pygame.sprite.Sprite):
             self.rect.x += self.speed 
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_SPACE:
+                if event.key == pygame.K_SPACE and on_ground:
                     print("jump")
                     self.velocity = -self.jump_speed
 
@@ -40,6 +40,7 @@ class Player(pygame.sprite.Sprite):
         
         self.rect.y += self.velocity
         #Physics
+        ##Be careful using on_ground in the following if statement may cuase issues
         if self.rect.bottom > config.screen_height:
             print("GET DOWN")
             self.rect.bottom = config.screen_height 
