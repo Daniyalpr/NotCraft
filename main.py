@@ -11,16 +11,18 @@ width,height = (1200,800)
 screen = pygame.display.set_mode((width,height))
 pygame.display.set_caption("NotCraft")
 
-# Making a background
+# Loading assets
 background_surface = pygame.image.load("assets/graphics/enviorment/background.jpeg").convert()
 background_surface = pygame.transform.scale(background_surface,(width,height))
+character_surface = pygame.image.load("assets/graphics/steve.png")
+character_surface = pygame.transform.scale(character_surface,(100,100))
 
 while True:
     screen.blit(background_surface,(0,0))
+    screen.blit(character_surface,(0,0))
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
-            logging.info("even is equal to pygame.QUIT")
             exit()
     pygame.display.update()
     clock.tick(60)
