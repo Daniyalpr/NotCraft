@@ -16,7 +16,7 @@ pygame.display.set_caption("NotCraft")
 background_surface = pygame.image.load("assets/graphics/enviorment/background.jpeg").convert()
 background_surface = pygame.transform.scale(background_surface,(config.screen_width,config.screen_height))
 
-player = player.Player(startPos = (600,400), speed = 5, jump_speed = 3, gravity = 0.06)
+player = player.Player(startPos = (600,400), speed = 5, jump_speed = 8, gravity = 0.25)
 while True:
     #Groups
     player_group = pygame.sprite.GroupSingle(player)
