@@ -1,5 +1,6 @@
 from sys import exit
 import pygame 
+import config
 class Player(pygame.sprite.Sprite):
     def __init__(self, startPos:tuple, speed, jump_speed):
         super().__init__()
@@ -30,5 +31,7 @@ class Player(pygame.sprite.Sprite):
                 exit()
         #Gravity
 
-            
+        #Physics
+        if self.rect.bottom > config.screen_height:
+            self.rect.bottom = config.screen_height 
 

@@ -1,5 +1,6 @@
 import pygame
 import logging
+import config
 from sys import exit
 import player
 
@@ -8,15 +9,14 @@ pygame.init()
 
 clock = pygame.time.Clock()
 #Default settings
-width,height = (1200,800)
 FPS = 60
 # Display and title
-screen = pygame.display.set_mode((width,height))
+screen = pygame.display.set_mode((config.screen_width,config.screen_height))
 pygame.display.set_caption("NotCraft")
 
 # Loading assets
 background_surface = pygame.image.load("assets/graphics/enviorment/background.jpeg").convert()
-background_surface = pygame.transform.scale(background_surface,(width,height))
+background_surface = pygame.transform.scale(background_surface,(config.screen_width,config.screen_height))
 
 player = player.Player((600,400),4,10)
 while True:
