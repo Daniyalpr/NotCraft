@@ -5,7 +5,7 @@ import numpy as np
 
 
 class Player(pygame.sprite.Sprite):
-    def __init__(self, startPos:tuple, speed, jump_speed, gravity, y_velocity = 0, on_ground = False):
+    def __init__(self, startPos:tuple, speed, jump_speed, gravity, y_velocity = 0, on_ground = False,):
         super().__init__()
         character_surface = pygame.image.load("assets/graphics/steve.png").convert_alpha()
         character_surface = pygame.transform.scale(character_surface,(80,100))
@@ -17,9 +17,9 @@ class Player(pygame.sprite.Sprite):
         self.y_velocity = y_velocity
         self.on_ground = on_ground
         #The next attribute gives you the position but in 18,32 format
-        self.player_matrix_pos = np.array([int(self.rect.center[0]/60), int(self.rect.center[1]/60)])
+        self.matrix_pos = np.array([int(self.rect.center[1]/60), int(self.rect.center[0]/60)])
 
-    def update(self):
+    def update(self, terrain:world.Terrain):
         #Checks if player is on ground or not
         if self.rect.bottom >= config.screen_height:
             self.on_ground = True
@@ -48,12 +48,15 @@ class Player(pygame.sprite.Sprite):
         if not self.on_ground:
             self.y_velocity += self.gravity
         #Physics
-        below_block_idx = self.player_matrix_pos + np.array([0,1])
-        print(below_block_idx)
+        below_block_idx = self.matrix_pos + np.array([1,0])
         ##Be careful using self.on_ground in the following if statement may cuase issues
+        ##The next if statement prevents player from falling-off
         if self.rect.bottom > config.screen_height:
             self.rect.bottom = config.screen_height 
             self.y_velocity = 0
+
+
+        self.matrix_pos = np.array([int(self.rect.center[1]/60), int(self.rect.center[0]/60)])
 
 
 
