@@ -19,11 +19,11 @@ background_surface = pygame.Surface((config.screen_width,config.screen_height))
 background_surface.fill(BLUE)
 
 
-player = player.Player(startPos = (600,400), speed = 5, jump_speed = 8, gravity = 0.35)
 
 terrain1 = Terrain()
 terrain1.terrain_map[-1,-1] = 1
 
+player = player.Player(startPos = (600,400), speed = 5, jump_speed = 8, gravity = 0.35)
 
 DEFAULT_FONT = pygame.font.Font("assets/fonts/LuckiestGuy-Regular.ttf",30)
 debug_mode = True
@@ -56,7 +56,7 @@ while True:
         #player.on_ground = True
 
     #Updating
-    player_group.update()
+    player_group.update((terrain1))
 
     pygame.display.update()
     clock.tick(config.FPS)

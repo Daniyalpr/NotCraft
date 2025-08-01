@@ -3,6 +3,7 @@ import pygame
 import config
 import numpy as np
 
+from world import Terrain
 
 class Player(pygame.sprite.Sprite):
     def __init__(self, startPos:tuple, speed, jump_speed, gravity, y_velocity = 0, on_ground = False,):
@@ -19,7 +20,7 @@ class Player(pygame.sprite.Sprite):
         #The next attribute gives you the position but in 18,32 format
         self.matrix_pos = np.array([int(self.rect.center[1]/60), int(self.rect.center[0]/60)])
 
-    def update(self, terrain:world.Terrain):
+    def update(self, terrain:Terrain):
         #Checks if player is on ground or not
         if self.rect.bottom >= config.screen_height:
             self.on_ground = True
