@@ -10,6 +10,10 @@ class Block(pygame.sprite.Sprite):
     def draw(self, screen):
         screen.blit(self.image,self.rect)
 
+    def top(idx_of_block):
+        return idx_of_block[0] * block_size
+
+
     
 
 

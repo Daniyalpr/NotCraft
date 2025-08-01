@@ -21,7 +21,6 @@ background_surface.fill(BLUE)
 
 
 terrain1 = Terrain()
-terrain1.terrain_map[-1,-1] = 1
 
 player = player.Player(startPos = (600,400), speed = 5, jump_speed = 8, gravity = 0.35)
 
@@ -34,8 +33,6 @@ while True:
 
     #Draw things
     screen.blit(background_surface,(0,0))
-    pygame.draw.rect(screen, 'Red', player.rect)
-    player_group.draw(screen)
     terrain1.draw(screen)
 
     if debug_mode:
@@ -48,7 +45,9 @@ while True:
         txt_surface = DEFAULT_FONT.render("FPS: " + str(int(clock.get_fps())), True, WHITE)
         screen.blit(txt_surface, (0,80))
 
+        pygame.draw.rect(screen, 'Red', player.rect)
 
+    player_group.draw(screen)
 
 
 
