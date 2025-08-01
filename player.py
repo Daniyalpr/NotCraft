@@ -18,23 +18,7 @@ class Player(pygame.sprite.Sprite):
         self.physics = PhysicsBody(self)
 
     def update(self, terrain:Terrain):
-        #Movement
-        keys = pygame.key.get_pressed()
-        if keys[pygame.K_UP]:
-            self.physics.move("UP")
-        if keys[pygame.K_DOWN]:
-            self.physics.move("DOWN")
-        if keys[pygame.K_RIGHT]:
-            self.physics.move("RIGHT")
-        if keys[pygame.K_LEFT]:
-            self.physics.move("LEFT")
-        for event in pygame.event.get():
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_SPACE and self.physics.on_ground:
-                    self.physics.jump()
-            if event.type == pygame.QUIT:
-                exit()
-        
+
         self.physics.update_player_state(terrain.terrain_map)
         self.physics.apply_gravity()
 

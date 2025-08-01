@@ -30,10 +30,25 @@ while True:
     #Groups
     player_group = pygame.sprite.GroupSingle(player)
 
-
-    #Draw things
     screen.blit(background_surface,(0,0))
     terrain1.draw(screen)
+
+    keys = pygame.key.get_pressed()
+    if keys[pygame.K_UP]:
+        player.physics.move("UP")
+    if keys[pygame.K_DOWN]:
+        player.physics.move("DOWN")
+    if keys[pygame.K_RIGHT]:
+        player.physics.move("RIGHT")
+    if keys[pygame.K_LEFT]:
+        player.physics.move("LEFT")
+    for event in pygame.event.get():
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_SPACE and player.physics.on_ground:
+                player.physics.jump()
+    if event.type == pygame.QUIT:
+        exit()
+        
 
     if debug_mode:
         txt_surface = DEFAULT_FONT.render(str(player.rect.center), True, WHITE)
@@ -45,14 +60,9 @@ while True:
         txt_surface = DEFAULT_FONT.render("FPS: " + str(int(clock.get_fps())), True, WHITE)
         screen.blit(txt_surface, (0,80))
 
-        pygame.draw.rect(screen, 'Red', player.rect)
+        #pygame.draw.rect(screen, 'Red', player.rect)
 
     player_group.draw(screen)
-
-
-
-    #if(player.rect.bottom >= dirtRec.top and player.rect.bottom - player.y_velocity <= dirtRec.top and player.rect.right > dirtRec.left and player.rect.left < dirtRec.right):
-        #player.on_ground = True
 
     #Updating
     player_group.update((terrain1))
