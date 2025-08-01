@@ -1,23 +1,28 @@
 from sys import exit
 import pygame 
 import config
+import numpy as np
 
 
 class Player(pygame.sprite.Sprite):
-    def __init__(self, startPos:tuple, speed, jump_speed, gravity, velocity = 0):
+    def __init__(self, startPos:tuple, speed, jump_speed, gravity, y_velocity = 0, on_ground = False):
         super().__init__()
         character_surface = pygame.image.load("assets/graphics/steve.png").convert_alpha()
-        character_surface = pygame.transform.scale(character_surface,(100,100))
+        character_surface = pygame.transform.scale(character_surface,(80,100))
         self.image = character_surface
         self.rect = character_surface.get_rect(center = startPos)
         self.speed = speed
         self.jump_speed = jump_speed
         self.gravity = gravity
-        self.velocity = velocity
+        self.y_velocity = y_velocity
+        self.on_ground = on_ground
+        #The next attribute gives you the position but in 18,32 format
+        self.player_matrix_pos = np.array([int(self.rect.center[0]/60), int(self.rect.center[1]/60)])
 
     def update(self):
         #Checks if player is on ground or not
-        on_ground = self.rect.bottom >= config.screen_height
+        if self.rect.bottom >= config.screen_height:
+            self.on_ground = True
 
         #Movement
         keys = pygame.key.get_pressed()
@@ -31,22 +36,26 @@ class Player(pygame.sprite.Sprite):
             self.rect.x += self.speed 
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_SPACE and on_ground:
-                    print("jump")
-                    self.velocity = -self.jump_speed
+                if event.key == pygame.K_SPACE and self.on_ground:
+                    self.y_velocity = -self.jump_speed
+                    self.on_ground = False
 
             if event.type == pygame.QUIT:
                 exit()
         
-        self.rect.y += self.velocity
-        #Physics
-        ##Be careful using on_ground in the following if statement may cuase issues
-        if self.rect.bottom > config.screen_height:
-            print("GET DOWN")
-            self.rect.bottom = config.screen_height 
-            self.velocity = 0
         #Gravity
-        if not on_ground:
-            self.velocity += self.gravity
+        self.rect.y += self.y_velocity
+        if not self.on_ground:
+            self.y_velocity += self.gravity
+        #Physics
+        below_block_idx = self.player_matrix_pos + np.array([0,1])
+        print(below_block_idx)
+        ##Be careful using self.on_ground in the following if statement may cuase issues
+        if self.rect.bottom > config.screen_height:
+            self.rect.bottom = config.screen_height 
+            self.y_velocity = 0
+
+
+
 
 
