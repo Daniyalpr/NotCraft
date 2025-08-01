@@ -10,23 +10,14 @@ class Player(pygame.sprite.Sprite):
     def __init__(self, startPos:tuple, speed, jump_speed, gravity, y_velocity = 0, on_ground = False,):
         super().__init__()
         character_surface = pygame.image.load("assets/graphics/steve.png").convert_alpha()
-        character_surface = pygame.transform.scale(character_surface,(80,100))
+        character_surface = pygame.transform.scale(character_surface,(config.character_width,config.character_height))
         self.image = character_surface
-        self.rect = character_surface.get_rect(center = startPos)
+        self.rect = pygame.Rect(startPos[0],startPos[1], config.character_width, config.character_height)
+        #The next attribute gives you the position but in 18,32 format
         self.matrix_pos = np.array([int(self.rect.center[1]/60), int(self.rect.center[0]/60)])
         self.physics = PhysicsBody(self)
-        self.speed = speed
-        self.jump_speed = jump_speed
-        self.gravity = gravity
-        self.y_velocity = y_velocity
-        self.on_ground = on_ground
-        #The next attribute gives you the position but in 18,32 format
 
     def update(self, terrain:Terrain):
-        #Checks if player is on ground or not
-        if self.rect.bottom >= config.screen_height:
-            self.physics.on_ground = True
-
         #Movement
         keys = pygame.key.get_pressed()
         if keys[pygame.K_UP]:
@@ -44,15 +35,8 @@ class Player(pygame.sprite.Sprite):
             if event.type == pygame.QUIT:
                 exit()
         
-        self.physics.apply_gravity()
         self.physics.update_player_state(terrain.terrain_map)
-
-        ##Be careful using self.on_ground in the following if statement may cuase issues
-        ##The next if statement prevents player from falling-off
-        if self.rect.bottom > config.screen_height:
-            self.rect.bottom = config.screen_height 
-            self.y_velocity = 0
-
+        self.physics.apply_gravity()
 
         self.matrix_pos = np.array([int(self.rect.center[1]/60), int(self.rect.center[0]/60)])
 
