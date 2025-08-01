@@ -16,8 +16,6 @@ class PhysicsBody():
         self.x_velocity = x_velocity
         self.x_force = x_force
     def jump(self):
-        print("YOU JUMPED")
-        print(self.sprite.rect)
         self.y_velocity = -self.jump_speed
         self.sprite.rect.y += self.y_velocity
         self.on_ground = False
@@ -29,15 +27,18 @@ class PhysicsBody():
     def update_player_state(self, terrain_map):
         below_block_idx = self.sprite.matrix_pos + np.array([1,0])
         
-        #if below_block_idx[0] <= config.block_num_row -1 and terrain_map[below_block_idx] != 0:
-            #print(Block.top(below_block_idx))
-
+        if below_block_idx[0] <= config.block_num_row -1 and terrain_map[below_block_idx[0],below_block_idx[1]] != 0 and self.sprite.rect.bottom >= Block.top(below_block_idx) and self.sprite.rect.bottom-self.y_velocity <= Block.top(below_block_idx):
+            self.on_ground = True
+        elif below_block_idx[0] <= config.block_num_row -1:
+            self.on_ground = False
     
     def move(self, direction:str):
         if direction == "UP":
             self.sprite.rect.y -= self.movement_speed
+            self.on_ground = False
         elif direction == "DOWN":
             self.sprite.rect.y += self.movement_speed
+            self.on_ground = False
         elif direction == "RIGHT":
             self.sprite.rect.x += self.movement_speed
         elif direction == "LEFT":
