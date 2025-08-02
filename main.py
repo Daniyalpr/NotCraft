@@ -26,6 +26,8 @@ player = player.Player(startPos = (600,400), speed = 5, jump_speed = 8, gravity 
 
 DEFAULT_FONT = pygame.font.Font("assets/fonts/LuckiestGuy-Regular.ttf",30)
 debug_mode = True
+show_player_rectangle = False
+
 while True:
     #Groups
     player_group = pygame.sprite.GroupSingle(player)
@@ -36,8 +38,10 @@ while True:
     keys = pygame.key.get_pressed()
     if keys[pygame.K_UP]:
         player.physics.move("UP")
+        player.gravity_status = "OFF"
     if keys[pygame.K_DOWN]:
         player.physics.move("DOWN")
+        player.gravity_status = "OFF"
     if keys[pygame.K_RIGHT]:
         player.physics.move("RIGHT")
     if keys[pygame.K_LEFT]:
@@ -46,6 +50,10 @@ while True:
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE and player.physics.on_ground:
                 player.physics.jump()
+            if event.key == pygame.K_F1:
+                debug_mode = not debug_mode
+            if event.key == pygame.K_F2 and debug_mode:
+                show_player_rectangle = not show_player_rectangle
     if event.type == pygame.QUIT:
         exit()
         
@@ -60,7 +68,11 @@ while True:
         txt_surface = DEFAULT_FONT.render("FPS: " + str(int(clock.get_fps())), True, WHITE)
         screen.blit(txt_surface, (0,80))
 
-        #pygame.draw.rect(screen, 'Red', player.rect)
+        txt_surface = DEFAULT_FONT.render(f"Show Player Rec: {show_player_rectangle}", True, WHITE)
+        screen.blit(txt_surface, (0,120))
+
+        if show_player_rectangle:
+            pygame.draw.rect(screen, 'Red', player.rect)
 
     player_group.draw(screen)
 
