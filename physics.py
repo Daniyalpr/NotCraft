@@ -5,10 +5,11 @@ from block import Block
 import config
 
 class PhysicsBody():
-    def __init__(self, sprite:pygame.sprite.Sprite, gravity_value = 0.35, movement_speed = 5, jump_speed = 8, on_ground = False, y_velocity = 0, x_velocity = 0, x_force = 0.35):
+    def __init__(self, sprite:pygame.sprite.Sprite, gravity_value = 0.35, gravity_status = "ON", movement_speed = 5, jump_speed = 8, on_ground = False, y_velocity = 0, x_velocity = 0, x_force = 0.35):
         
         self.sprite = sprite
         self.gravity_value = gravity_value
+        self.gravity_status = gravity_status
         self.movement_speed = movement_speed
         self.jump_speed = jump_speed
         self.on_ground = on_ground
@@ -19,8 +20,10 @@ class PhysicsBody():
         self.y_velocity = -self.jump_speed
         self.sprite.rect.y += self.y_velocity
         self.on_ground = False
+        self.gravity_status = "ON"
     def apply_gravity(self):
-        if not self.on_ground:
+        if not self.on_ground and self.gravity_status == "ON":
+            print("gravity works")
             self.y_velocity += self.gravity_value
             self.sprite.rect.y += self.y_velocity
     #The next function checks if player is on ground or not
