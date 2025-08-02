@@ -22,7 +22,7 @@ background_surface.fill(BLUE)
 
 terrain1 = Terrain()
 
-player = player.Player(startPos = (600,400), speed = 5, jump_speed = 8, gravity = 0.35)
+player = player.Player(startPos = (600,400))
 
 DEFAULT_FONT = pygame.font.Font("assets/fonts/LuckiestGuy-Regular.ttf",30)
 debug_mode = True
