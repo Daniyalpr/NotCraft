@@ -43,9 +43,9 @@ while True:
     if keys[pygame.K_DOWN]:
         player.physics.move("DOWN", terrain1.terrain_map)
         player.gravity_status = "OFF"
-    if keys[pygame.K_RIGHT]:
+    if keys[pygame.K_RIGHT] or keys[pygame.K_d]:
         player.physics.move("RIGHT", terrain1.terrain_map)
-    if keys[pygame.K_LEFT]:
+    if keys[pygame.K_LEFT] or keys[pygame.K_a]:
         player.physics.move("LEFT", terrain1.terrain_map)
     for event in pygame.event.get():
         if event.type == pygame.KEYDOWN:
@@ -55,6 +55,14 @@ while True:
                 debug_mode = not debug_mode
             if event.key == pygame.K_F2 and debug_mode:
                 show_player_rectangle = not show_player_rectangle
+        elif event.type == pygame.MOUSEBUTTONDOWN:
+            mouse_row,mouse_column = int(pygame.mouse.get_pos()[1] /60), int(pygame.mouse.get_pos()[0] /60)
+            if event.button == 1:
+                terrain1.terrain_map[mouse_row,mouse_column] = 0 
+            elif event.button == 3:
+                terrain1.terrain_map[mouse_row,mouse_column] = 1 
+
+
     if event.type == pygame.QUIT:
         exit()
         
