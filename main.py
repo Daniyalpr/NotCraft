@@ -1,4 +1,5 @@
 import pygame
+import numpy as np
 import logging
 import config
 from sys import exit
@@ -37,15 +38,15 @@ while True:
 
     keys = pygame.key.get_pressed()
     if keys[pygame.K_UP]:
-        player.physics.move("UP")
+        player.physics.move("UP", terrain1.terrain_map)
         player.gravity_status = "OFF"
     if keys[pygame.K_DOWN]:
-        player.physics.move("DOWN")
+        player.physics.move("DOWN", terrain1.terrain_map)
         player.gravity_status = "OFF"
     if keys[pygame.K_RIGHT]:
-        player.physics.move("RIGHT")
+        player.physics.move("RIGHT", terrain1.terrain_map)
     if keys[pygame.K_LEFT]:
-        player.physics.move("LEFT")
+        player.physics.move("LEFT", terrain1.terrain_map)
     for event in pygame.event.get():
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE and player.physics.on_ground:
@@ -62,7 +63,7 @@ while True:
         txt_surface = DEFAULT_FONT.render(str(player.rect.center), True, WHITE)
         screen.blit(txt_surface, (0,10))
 
-        txt_surface = DEFAULT_FONT.render(str(player.matrix_pos), True, WHITE)
+        txt_surface = DEFAULT_FONT.render(str(player.center_matrix_pos), True, WHITE)
         screen.blit(txt_surface, (0,40))
 
         txt_surface = DEFAULT_FONT.render("FPS: " + str(int(clock.get_fps())), True, WHITE)
@@ -71,8 +72,21 @@ while True:
         txt_surface = DEFAULT_FONT.render(f"Show Player Rec: {show_player_rectangle}", True, WHITE)
         screen.blit(txt_surface, (0,120))
 
+        txt_surface = DEFAULT_FONT.render(f"x velocity: {player.physics.x_velocity}", True, WHITE)
+        screen.blit(txt_surface, (0,160))
+
+        #shows the nearest blocks in white
+        for i in player.physics.near_blocks_matrix_pos():
+            for b in i:
+                rect_test = pygame.Rect(b[1]*60,b[0]*60,60,60) 
+                pygame.draw.rect(screen, WHITE, rect_test)
+        #
         if show_player_rectangle:
             pygame.draw.rect(screen, 'Red', player.rect)
+
+
+
+
 
     player_group.draw(screen)
 
