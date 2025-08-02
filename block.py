@@ -12,6 +12,12 @@ class Block(pygame.sprite.Sprite):
 
     def top(idx_of_block):
         return idx_of_block[0] * block_size
+    def left(idx_of_block):
+        return idx_of_block[1] * block_size
+    def right(idx_of_block):
+        return (idx_of_block[1] +1) * block_size
+    def bottom(idx_of_block):
+        return (idx_of_block[0] + 1) * block_size
 
 
     
