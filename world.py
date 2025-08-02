@@ -9,7 +9,7 @@ class Terrain():
     def terrain_generator(self) -> np.ndarray:
         map = np.zeros((block_num_row,block_num_column),int)
         map[-1] = np.ones(block_num_column,int)
-        map[-2,-5] = 1
+        map[-2,-5:-1] = 1
         map[-3,-4] = 1
         map[-4,-3] = 1
         return map
