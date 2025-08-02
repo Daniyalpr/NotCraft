@@ -12,6 +12,10 @@ class Terrain():
         map[-2,-5:-1] = 1
         map[-3,-4] = 1
         map[-4,-3] = 1
+        random_row = np.random.randint(0, 18, 10)
+        random_column= np.random.randint(0, 32, 10)
+        map[random_row,random_column] = 1
+        #generate some random blocks
         return map
     def draw(self, screen):
         ## The next for loop goes through all indexes in numpy 2d array
