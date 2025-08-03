@@ -2,23 +2,15 @@ import pygame
 from config import block_size
 
 class Block(pygame.sprite.Sprite):
-    dirt_surface = pygame.transform.scale(pygame.image.load("assets/graphics/blocks/dirt.png"),(block_size,block_size))
-    def __init__(self,default_pos:tuple):
+    block_surface = {"dirt":pygame.transform.scale(pygame.image.load("assets/graphics/blocks/dirt.png"),(block_size,block_size))
+}
+    def __init__(self,start_matrix_pos:tuple, block_name:str):
         super().__init__()
-        self.image = Block.dirt_surface
-        self.rect = self.image.get_rect(topleft = default_pos)
+        self.image = Block.block_surface[block_name]
+        self.matrix_pos = start_matrix_pos
+        self.rect = self.image.get_rect(topleft = (self.matrix_pos[1]*block_size, self.matrix_pos[0]*block_size))
     def draw(self, screen):
         screen.blit(self.image,self.rect)
-
-    def top(idx_of_block):
-        return idx_of_block[0] * block_size
-    def left(idx_of_block):
-        return idx_of_block[1] * block_size
-    def right(idx_of_block):
-        return (idx_of_block[1] +1) * block_size
-    def bottom(idx_of_block):
-        return (idx_of_block[0] + 1) * block_size
-
 
     
 
