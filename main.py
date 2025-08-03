@@ -2,6 +2,7 @@ import pygame
 import numpy as np
 import logging
 import config
+from block import Block
 from sys import exit
 from colors import BLUE, WHITE
 import player
@@ -60,7 +61,7 @@ while True:
             if event.button == 1:
                 terrain1.terrain_map[mouse_row,mouse_column] = 0 
             elif event.button == 3:
-                terrain1.terrain_map[mouse_row,mouse_column] = 1 
+                terrain1.terrain_map[mouse_row,mouse_column] = Block((mouse_row, mouse_column), "dirt")
 
 
     if event.type == pygame.QUIT:
@@ -83,13 +84,12 @@ while True:
         txt_surface = DEFAULT_FONT.render(f"x velocity: {player.physics.x_velocity}", True, WHITE)
         screen.blit(txt_surface, (0,160))
 
-        #shows the nearest blocks in white
-        for i in player.physics.near_blocks_matrix_pos():
-            for b in i:
-                rect_test = pygame.Rect(b[1]*60,b[0]*60,60,60) 
-                pygame.draw.rect(screen, WHITE, rect_test)
-        #
-        if show_player_rectangle:
+        txt_surface = DEFAULT_FONT.render(f"on ground: {player.physics.on_ground}", True, WHITE)
+        screen.blit(txt_surface, (0,200))
+        txt_surface = DEFAULT_FONT.render(f"y velocity: {player.physics.y_velocity}", True, WHITE)
+        screen.blit(txt_surface, (0,260))
+
+       if show_player_rectangle:
             pygame.draw.rect(screen, 'Red', player.rect)
 
 
