@@ -7,6 +7,7 @@ block_num_column = int(screen_width / block_size)
 
 FPS = 60
 
-character_width = block_size
+character_width = block_size - 10
 character_height = block_size * 2
+player_margin = 4
 
