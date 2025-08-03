@@ -20,10 +20,9 @@ class Player(pygame.sprite.Sprite):
 
     def update(self, terrain:Terrain):
 
-        self.physics.update_player_state(terrain.terrain_map)
-        self.physics.apply_gravity()
         self.physics.apply_x_force()
-        self.physics.update_position(terrain.terrain_map)
+        self.physics.check_collisions(terrain.terrain_map)
+        self.physics.apply_gravity()
 
         self.center_matrix_pos = np.array([int(self.rect.center[1]/60), int(self.rect.center[0]/60)])
 
