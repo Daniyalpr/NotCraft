@@ -59,9 +59,11 @@ class PhysicsBody():
                 if block != 0:
                     if block.rect.colliderect(self.sprite.rect.x + self.x_velocity, self.sprite.rect.y, config.character_width, config.character_height):
                         if self.x_velocity > 0:
+                            print("right collide")
                             self.x_velocity = 0
                             self.sprite.rect.right = block.rect.left
                         elif self.x_velocity < 0:
+                            print("left collide")
                             self.x_velocity = 0
                             self.sprite.rect.left = block.rect.right
                             
@@ -70,9 +72,11 @@ class PhysicsBody():
                             self.on_ground = True
                             self.y_velocity = 0
                             self.sprite.rect.bottom = block.rect.top
+                            print("top collide")
                         elif self.y_velocity < 0 and self.sprite.rect.right - config.player_margin > block.rect.left and self.sprite.rect.left + config.player_margin < block.rect.right:
                             self.sprite.top = block.rect.bottom
                             self.y_velocity = 0
+                            print("bottom collide")
 
                 
 
