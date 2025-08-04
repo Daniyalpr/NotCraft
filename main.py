@@ -24,7 +24,7 @@ background_surface.fill(BLUE)
 
 terrain1 = Terrain()
 
-player = player.Player(startPos = (600,400))
+player = player.Player(startPos = terrain1.player_start_pos())
 
 DEFAULT_FONT = pygame.font.Font("assets/fonts/LuckiestGuy-Regular.ttf",30)
 debug_mode = True
@@ -61,7 +61,7 @@ while True:
             if event.button == 1:
                 terrain1.terrain_map[mouse_row,mouse_column] = 0 
             elif event.button == 3:
-                terrain1.terrain_map[mouse_row,mouse_column] = Block((mouse_row, mouse_column), "dirt")
+                terrain1.terrain_map[mouse_row,mouse_column] = Block("dirt", (mouse_row, mouse_column))
 
 
     if event.type == pygame.QUIT:
