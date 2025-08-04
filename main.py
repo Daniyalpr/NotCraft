@@ -89,7 +89,7 @@ while True:
         txt_surface = DEFAULT_FONT.render(f"y velocity: {player.physics.y_velocity}", True, WHITE)
         screen.blit(txt_surface, (0,260))
 
-       if show_player_rectangle:
+        if show_player_rectangle:
             pygame.draw.rect(screen, 'Red', player.rect)
 
 
